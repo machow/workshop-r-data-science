@@ -1,0 +1,10 @@
+version: '3'
+services:
+  rstudio:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    ports:
+      - "8787:8787"
+    volumes:
+      - ./home:/home

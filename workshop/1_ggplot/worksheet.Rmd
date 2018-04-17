@@ -1,0 +1,130 @@
+---
+title: "ggplot"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(dplyr)
+```
+
+**For more examples, see the [ggplot docs](http://ggplot2.tidyverse.org/index.html)**
+
+All plots with ggplot start with code like below.
+
+```{r, eval = FALSE}
+ggplot(DATASET, aes())
+```
+
+For example,
+
+```{r, eval = FALSE}
+ggplot(mtcars, aes())
+```
+
+### What is `aes`?
+
+The `aes()` function stands for aesthetic.
+It tells ggplot how to put data on to a plot.
+For example `ggplot(mtcars, aes(x = cyl, y = mpg))` says that `x` should be the `cyl` data from `mtcars`.
+
+Adding Geoms
+------------
+
+Geoms are instructions for what action ggplot should take on each row.
+For example, `geom_point` tells ggplot to go down each row, and put a dot.
+
+```{r}
+head(mtcars)
+```
+
+
+```{r, fig.width = 4, fig.height = 2.5}
+ggplot(mtcars, aes()) +
+  geom_point(aes(x = cyl, y = mpg))
+```
+
+
+Step by Step Problems
+---------------------
+
+### Scatterplot
+
+**Fill in the plot below.**
+
+```{r}
+head(mtcars)
+```
+
+
+```{r, eval = FALSE}
+ggplot(mtcars, aes()) +
+  geom_point(aes(x = cyl, y = hp))
+```
+
+```{r, echo = FALSE}
+ggplot(mtcars, aes()) +
+  geom_point(aes(x = cyl, y = hp), alpha = 0) +
+  theme(axis.title.x = element_blank(), axis.title.y = element_blank())
+```
+
+<br><br><br><br>
+
+### Scatterplot with Size and Shape
+
+```{r}
+head(mtcars)
+```
+
+```{r, eval = FALSE}
+ggplot(mtcars, aes()) +
+  geom_point(aes(x = wt, y = mpg, shape = cyl, size = hp))
+```
+
+```{r, echo = FALSE}
+tcars <- transform(mtcars, cyl = factor(cyl))
+ggplot(tcars, aes()) +
+  geom_point(aes(x = wt, y = mpg, shape = cyl, size = hp), alpha = 0) +
+  geom_point(aes(x = wt, y = mpg, shape = cyl, size = hp), alpha = 0, data = tcars)
+```
+
+
+### Facets
+
+```{r}
+head(mtcars)
+```
+
+
+```{r, eval = FALSE}
+ggplot(mtcars, aes()) +
+  geom_point(aes(x = wt, y = mpg)) +
+  facet_grid(~ gear)
+
+```
+
+```{r, eval = TRUE}
+ggplot(head(mtcars), aes()) +
+  geom_point(aes(x = wt, y = mpg), alpha = 0) +
+  facet_grid(~ gear)
+```
+
+
+### Simple Barchart
+
+```{r}
+newcars <- mtcars %>% 
+  mutate(name = rownames(mtcars)) %>%
+  select(name, name, hp)
+
+head(newcars)
+```
+
+```{r}
+ggplot(head(newcars), aes()) +
+  geom_point(aes(x = name, y = hp)) +
+  geom_col(aes(x = name, y = hp))
+```
+
+

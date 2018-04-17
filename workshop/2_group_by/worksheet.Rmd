@@ -1,0 +1,57 @@
+---
+title: "handout"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(ggplot2)
+library(bandfees)
+```
+
+Background
+----------
+
+**What is a mean?**
+
+
+Verbs
+-----
+
+### Summarize
+
+```{r}
+bandfees %>%
+  summarize(mlower = mean(lower), mupper = mean(upper))
+```
+
+
+### Group By
+
+```{r}
+bandfees %>%
+  group_by(plus) %>%
+  summarize(mlower = mean(lower), mupper = mean(upper))
+```
+
+Plotting
+--------
+
+* histogram
+* boxplot
+
+### Histogram
+
+```{r}
+ggplot(bandfees) +
+  geom_histogram(aes(lower))
+```
+
+### Boxplot
+
+```{r}
+ggplot(bandfees) +
+  geom_boxplot(aes(x = plus,  y = lower, group = plus))
+```
+

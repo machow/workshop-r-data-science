@@ -1,0 +1,70 @@
+---
+title: "handout"
+output:
+  html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+```
+
+Basics
+------
+
+### Strings and Comments
+
+```{r}
+# R ignores anything after a pound sign
+
+"string of words are surrounded by quotes"
+```
+
+### Functions and Pipes
+
+```{r}
+# functions are followed by parentheses
+filter(cars, speed == 4)
+
+# a pipe is a different way of calling functions
+# the line below is the same as head(cars)
+cars %>% filter(speed == 4)
+```
+
+### View
+
+The `View` function, opens up a spreadsheet window, so you can browse your data.
+
+```{r, eval = FALSE}
+View(cars)
+```
+
+Tidy Verbs
+----------
+
+### Filter
+
+Can use
+
+* `>`, `<`, `!=` to filter
+
+```{r cars}
+cars %>%
+  filter(speed == 4, dist == 2)
+```
+
+### Arrange
+
+```{r}
+cars %>%
+  arrange(desc(speed)) %>%
+  filter(speed < 8)
+```
+
+### Mutate
+
+```{r}
+cars %>%
+  mutate(high_speed = speed > 4) %>%
+  filter(speed < 8)
+```
